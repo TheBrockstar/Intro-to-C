@@ -13,7 +13,15 @@
 */
 char *string_dup(char *src)
 {
+    int length = string_length(src);
+    char *dup = malloc(length);
+    int i;
 
+    for (i = 0; i <= length; i++) {
+        dup[i] = src[i];
+    }
+
+    return dup;
 }
 
 /*
@@ -26,7 +34,12 @@ char *string_dup(char *src)
 */
 void *mem_copy(void *dest, const void *src, int n)
 {
-
+    char *source = (char *)src;
+    char *destination = dest;
+    
+    for (int i = 0; i < n; i++) {
+        destination[i] = source[i];
+    }
 }
 
 /*
@@ -43,7 +56,23 @@ void *mem_copy(void *dest, const void *src, int n)
 */
 void *resize_memory(void *ptr, int old_size, int new_size)
 {
+    char *newptr = malloc(new_size + 1);
+    char *temp = (char *)ptr;
+    int size;
 
+    if (old_size < new_size) {
+        size = old_size;
+    } else {
+        size = new_size;
+    }
+
+    for (int i = 0; i < size; i++) {
+        newptr[i] = temp[i];
+    }   
+
+    ptr = newptr;
+
+    return ptr;
 }
 
 #ifndef TESTING
@@ -73,9 +102,12 @@ int main(void)
     int url_length = string_length(url);
     int path_length = string_length(path);
     
-    int new_length = url_length - 1 + path_length;
+    int new_length = url_length + 1 + path_length;
     char *new_url = resize_memory(url, url_length, new_length);
+    // char *new_url = url;
     char *p = new_url + url_length;
+
+    printf("%s\n", p-1);
 
     while (*path != '\0') {
         *p = *path;

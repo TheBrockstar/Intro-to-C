@@ -8,7 +8,9 @@
 */
 void swap(int* a, int* b)
 {
-
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 /*
@@ -19,9 +21,19 @@ void swap(int* a, int* b)
 
     Do not use the `strchr` function from the standard library.
 */
+
 char *find_char(char *str, int c)
 {
 
+    while (*str != c && *str != '\0') {
+        str++;
+    }
+
+    if (*str == '\0') {
+        return NULL;
+    }
+
+    return str;
 }
 
 /*
@@ -34,7 +46,15 @@ char *find_char(char *str, int c)
 */
 void string_copy(char *x, char *y)
 {
+    char *final = x;
 
+    while (*y != '\0') {
+        *x = *y;
+        x++;
+        y++;        
+    }
+
+    *x = '\0';
 }
 
 /* 
@@ -44,7 +64,7 @@ void string_copy(char *x, char *y)
     the difference between the first characters in m and n that differ.
     
     For example, given matching strings, this function should 
-    return 0. Given strings m = "hello world" and n = "goodbye",
+    return 0. Given strings m = "hello world" and n = "goodbye", 
     this function should return a positive value. Given strings
     m = "aardvark" and n = "zebra", should return a negative
     value.
@@ -53,6 +73,15 @@ void string_copy(char *x, char *y)
 */
 int string_compare(char *m, char *n)
 {
+    for (int i = 0; m[i] != '\n'; i++) {
+        if (m[i] < n[i]) {
+            return -1;
+        } else if(m[i] > n[i]) {
+            return 1;
+        }
+    }
+    
+    return 0;
 
 }
 
@@ -64,10 +93,29 @@ int string_compare(char *m, char *n)
 
     Do not use the `strstr` function from the standard library.
 */
+
 char *find_string(char *haystack, char *needle)
 {
-
+    char *temp;
+    char *solution;
+    while (*haystack != '\0') {
+        temp = needle;
+        solution = haystack;
+        if (*temp == *haystack) {
+            while (*temp == *haystack) {
+                if (*(temp + 1) == '\0') {
+                    return solution;
+                }
+                temp++;
+                haystack++;
+                }
+                haystack--;
+            }
+        haystack++;
+    }
+    return NULL;
 }
+    
 
 #ifndef TESTING
 int main(void)
